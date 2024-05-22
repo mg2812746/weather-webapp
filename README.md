@@ -7,10 +7,6 @@ Documentation done using sphinx, documentation found here.
 
 https://www.sphinx-doc.org/en/master/
 
-### Installing Sphinx
-```sudo apt-get install python3-sphinx```
-```pip install -U sphinx```
-
 # How it works
 
 https://www.weather.gov/documentation/services-web-api

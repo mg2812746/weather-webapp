@@ -14,3 +14,13 @@ class WeatherAPI:
         data = json.dumps(data)
 
         return data
+    # return latitude, longitude from city and state
+    def get_geocoordinates(city: str, state: str) -> list:
+        INDEX1 = '<div class="b_focusTextLarge">'
+        INDEX2 = '</div>'
+        coords = []
+        r = requests.get(f'https://www.bing.com/search?pglt=161&q={city}+{state}+latitude+longitude')
+        text = r.text
+        
+        
+        return coords
