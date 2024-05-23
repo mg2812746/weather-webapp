@@ -9,18 +9,37 @@ class WeatherAPI:
     def __str__(self):
         return f"{self.city} {self.state}"
     # to be completed
-    def get_weather_data(city : str, state: str) -> json:
+    def get_weather_data(self) -> json:
         data = {}
         data = json.dumps(data)
 
         return data
     # return latitude, longitude from city and state
-    def get_geocoordinates(city: str, state: str) -> list:
+    def get_geocoordinates(self) -> list:
         INDEX1 = '<div class="b_focusTextLarge">'
-        INDEX2 = '</div>'
+        INDEX2 = '</a>'
+        HEADERS = {'Content-Type': 'text/html'}
+        URL = f'https://www.bing.com/search?pglt=161&q={self.city}+{self.state}+latitude+longitude'
         coords = []
-        r = requests.get(f'https://www.bing.com/search?pglt=161&q={city}+{state}+latitude+longitude')
+
+        r = requests.get(URL, HEADERS)
         text = r.text
-        
+
+        file_out = open("search_test.txt", "w")
+        file_out.write(text)
+        file_out.close()
+
+
+        # find indexes of latitude and longitude
+        #first = text.find(INDEX1)
+        #last = text.find(INDEX2, first)
+
+        #text = text[first:last]
+        #print('first: '+ str(first) + ' last: ' + str(last))
+        #print(text)
         
         return coords
+    
+# driver
+testAPI = WeatherAPI('Fontana', 'California')
+testAPI.get_geocoordinates()
