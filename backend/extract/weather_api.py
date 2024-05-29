@@ -9,22 +9,32 @@ class WeatherAPI:
 
     def __str__(self):
         return f"{self.city} {self.state}"
+
     # return latitude, longitude from city and state
     def geocode(self) -> list:
         geolocator = Nominatim(user_agent="weather visualizer")
         g = geolocator.geocode(f'{self.city}, {self.state}')
         coords = [g.latitude, g.longitude]
         return coords
-    # to be completed
-    def get_weather_data(self) -> json:
+    # get grid endpoints
+    def get_gridpoints(self, geojson: dict) -> list:
+        gridpoints = [geojson['properties']['gridX'], geojson['properties']['gridY']]
+        return gridpoints
+    # get geojson from latitude and longitude
+    def get_geojson(self) -> str:
         coords = self.geocode()
         r = requests.get(f"https://api.weather.gov/points/{coords[0]},{coords[1]}")
         # Add timestamp of data accessed
         data = r.json()
         return data
-    
-    
+    # get hourly forcast data
+    def get_forecast_hourly(self) -> str:
+        geojson = self.get_geojson()
+        gridpoints = self.get_gridpoints(geojson)
+        forecast = requests.get(f"https://api.weather.gov/gridpoints/SGX/{str(gridpoints[0])},{str(gridpoints[1])}/forecast")
+        return forecast.json()
+
 # driver
 testAPI = WeatherAPI('Fontana', 'CA')
-data = testAPI.get_weather_data()
-print(data)
+forecast = testAPI.get_forecast_hourly()
+print(forecast)
