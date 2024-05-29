@@ -28,13 +28,24 @@ class WeatherAPI:
         data = r.json()
         return data
     # get hourly forcast data
-    def get_forecast_hourly(self) -> str:
+    def get_forecast_hourly(self) -> None:
         geojson = self.get_geojson()
         gridpoints = self.get_gridpoints(geojson)
-        forecast = requests.get(f"https://api.weather.gov/gridpoints/SGX/{str(gridpoints[0])},{str(gridpoints[1])}/forecast")
-        return forecast.json()
-
+        forecast_json = requests.get(f"https://api.weather.gov/gridpoints/SGX/{str(gridpoints[0])},{str(gridpoints[1])}/forecast")
+        forecast_json = forecast_json.json()
+        self.export('data.json', forecast_json)
+        # forecast_json = eval(forecast_json)
+        # data = self.get_data_from_json('data.json')
+    # export text to file
+    def export(self, file: str, data: dict) -> None:
+        with open(f'{file}', 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+    # import text from file
+    def get_data_from_json(self, file: str) -> dict:
+        with open(f'{file}') as fh:
+            a = json.load(fh)
+        fh.close()
+        return a
 # driver
 testAPI = WeatherAPI('Fontana', 'CA')
-forecast = testAPI.get_forecast_hourly()
-print(forecast)
+testAPI.get_forecast_hourly()
