@@ -33,7 +33,6 @@ class WeatherAPI:
         gridpoints = self.get_gridpoints(geojson)
         forecast_json = requests.get(f"https://api.weather.gov/gridpoints/SGX/{str(gridpoints[0])},{str(gridpoints[1])}/forecast")
         forecast_json = forecast_json.json()
-        self.export('data.json', forecast_json)
         # forecast_json = eval(forecast_json)
         # data = self.get_data_from_json('data.json')
     # export text to file
