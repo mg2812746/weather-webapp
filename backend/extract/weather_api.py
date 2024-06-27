@@ -1,6 +1,8 @@
 import requests
 import json
+from datetime import date
 from geopy.geocoders import Nominatim
+
 
 class WeatherAPI:
     def __init__(self, city: str , state: str):
@@ -34,7 +36,7 @@ class WeatherAPI:
         forecast_json = requests.get(f"https://api.weather.gov/gridpoints/SGX/{str(gridpoints[0])},{str(gridpoints[1])}/forecast")
         forecast_json = forecast_json.json()
         # forecast_json = eval(forecast_json)
-        # data = self.get_data_from_json('data.json')
+        self.export(f'data_{self.city}_{self.state}_{date.today()}.json', forecast_json)
     # export text to file
     def export(self, file: str, data: dict) -> None:
         with open(f'{file}', 'w', encoding='utf-8') as f:
@@ -46,5 +48,5 @@ class WeatherAPI:
         fh.close()
         return a
 # driver
-testAPI = WeatherAPI('Fontana', 'CA')
-testAPI.get_forecast_hourly()
+# testAPI = WeatherAPI('Fontana', 'CA')
+# testAPI.get_forecast_hourly()
