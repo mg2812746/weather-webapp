@@ -1,3 +1,13 @@
+'''
+
+File: weather_api.py
+Author: Miguel Galvez
+
+Summary: 
+    - Instantiates a WeatherAPI object with US city and state. 
+    - Calling get_forecast_hourly() creates a json files with appropriate timestamp of relevant weather data of city and state.
+
+'''
 import requests
 import json
 from datetime import date
@@ -47,6 +57,4 @@ class WeatherAPI:
             a = json.load(fh)
         fh.close()
         return a
-# driver
-# testAPI = WeatherAPI('Fontana', 'CA')
-# testAPI.get_forecast_hourly()
+
