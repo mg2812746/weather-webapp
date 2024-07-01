@@ -5,8 +5,10 @@ Author: Miguel Galvez
 
 Summary: 
     - Instantiates a WeatherAPI object with US city and state. 
-    - Calling get_forecast_hourly() creates a json files with appropriate timestamp of relevant weather data of city and state.
+    - Calling get_forecast_hourly() creates a json file with appropriate timestamp of relevant weather data of city and state.
 
+Notes: 
+    - Data is sourced from weather.gov API
 '''
 import requests
 import json
