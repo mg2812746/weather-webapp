@@ -21,9 +21,17 @@ def read_form():
 
     # Demonstration of ETL Process (Extract, Transform, Load)
     # Extract Data 
-    w = WeatherAPI(data['city'], data['state'])
 
-    w.get_forecast_hourly()
+    w = WeatherAPI(data['city'], data['state'])
+    try:
+        w.get_forecast_hourly()
+    except:
+        print("Error getting forcast data")
+    
+    # Transform JSON into usable data to be displayed to webapp
+
+    
+
     return{
         'city': data['city'],
         'state': data['state'],
