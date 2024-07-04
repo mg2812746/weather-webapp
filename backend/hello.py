@@ -30,6 +30,9 @@ def read_form():
     
     # Transform JSON into usable data to be displayed to webapp
 
+    a = w.get_data_from_json()
+    
+    print(a.values())
     
 
     return{

@@ -66,12 +66,9 @@ class WeatherAPI:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
     # import text from file
-    def get_data_from_json(self, file: str) -> dict:
-        with open(f'{file}') as fh:
-            a = json.load(fh)
-            # test
-            # periods = a['properties']['periods']
-            # print(periods)
-        fh.close()
-        return a
+    def get_data_from_json(self) -> dict:
+        with open(self.file, 'r') as file:
+            data = json.load(file)
+        # test
+        return data
 
