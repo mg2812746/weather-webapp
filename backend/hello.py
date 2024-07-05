@@ -32,8 +32,13 @@ def read_form():
 
     a = w.get_data_from_json()
     
-    print(a.values())
-    
+    l_data = a['properties']['periods']
+
+    l_data = list(l_data) 
+
+    d_list = (dict(l) for l in l_data)
+
+    print(d_list)
 
     return{
         'city': data['city'],
