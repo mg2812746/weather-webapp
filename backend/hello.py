@@ -15,36 +15,35 @@ def read_form():
     # Get form data as dict
     data = request.form
 
-    ## Process the extracted data
-    # city = data['city']
-    # state = data['state']
-
     # Demonstration of ETL Process (Extract, Transform, Load)
     # Extract Data 
 
     w = WeatherAPI(data['city'], data['state'])
-    try:
-        w.get_forecast_hourly()
-    except:
-        print("Error getting forcast data")
+    
+    w.get_forecast_hourly()
     
     # Transform JSON into usable data to be displayed to webapp
 
-    a = w.get_data_from_json()
-    
-    l_data = a['properties']['periods']
+    try:
+        a = w.get_data_from_json()
+        l_data = a['properties']['periods']
+        # Get appropriate data from each element and write to file
+        weather = dict()
+        
+        for l in l_data:
+            temp = l
+            day = temp['name']
+            temperature = temp['temperature'] # assume unit is Farenheit
+            d_forecast = temp['detailedForecast']
+            weather[day]=(f'{{{temperature} F, {d_forecast}}}')
 
-    # Get appropriate data from each element and write to file
-
-    weather = dict()
-    for l in l_data:
-        temp = l
-        day = temp['name']
-        temperature = temp['temperature'] # assume unit is Farenheit
-        d_forecast = temp['detailedForecast']
-        weather[day]=(f'{{{temperature} F, {d_forecast}}}')
-
-    return weather
+        return weather
+    except:
+        print("Error: File doesn't exist! can't proceeed with data transformation")
+        return {
+            'response': 500,
+            'error': "Could not find weather data file"
+        }
 
 if __name__ == '__main__':
     # Run the app on local development server

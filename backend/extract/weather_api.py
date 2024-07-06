@@ -46,6 +46,7 @@ class WeatherAPI:
         r = requests.get(f"https://api.weather.gov/points/{coords[0]},{coords[1]}")
         # Add timestamp of data accessed
         data = r.json()
+        print(data)
         return data
 
     # get hourly forcast data
@@ -58,6 +59,9 @@ class WeatherAPI:
         gridpoints = self.get_gridpoints(geojson)
         forecast_json = requests.get(f"https://api.weather.gov/gridpoints/SGX/{str(gridpoints[0])},{str(gridpoints[1])}/forecast")
         forecast_json = forecast_json.json()
+        if '@context' not in forecast_json.keys():
+            print('Error: Response Error From Weather.gov API server')
+            return None
         self.export(f'{self.file}', forecast_json)
     
     # export text to file
@@ -69,6 +73,5 @@ class WeatherAPI:
     def get_data_from_json(self) -> dict:
         with open(self.file, 'r') as file:
             data = json.load(file)
-        # test
         return data
 
