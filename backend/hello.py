@@ -34,16 +34,17 @@ def read_form():
     
     l_data = a['properties']['periods']
 
-    l_data = list(l_data) 
+    # Get appropriate data from each element and write to file
 
-    d_list = (dict(l) for l in l_data)
+    weather = dict()
+    for l in l_data:
+        temp = l
+        day = temp['name']
+        temperature = temp['temperature'] # assume unit is Farenheit
+        d_forecast = temp['detailedForecast']
+        weather[day]=(f'{{{temperature} F, {d_forecast}}}')
 
-    print(d_list)
-
-    return{
-        'city': data['city'],
-        'state': data['state'],
-    }
+    return weather
 
 if __name__ == '__main__':
     # Run the app on local development server
