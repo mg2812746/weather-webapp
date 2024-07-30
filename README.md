@@ -10,3 +10,8 @@ https://www.sphinx-doc.org/en/master/
 # How it works
 
 https://www.weather.gov/documentation/services-web-api
+
+# How to run
+
+`export FLASK_APP=hello`
+`flask run`
